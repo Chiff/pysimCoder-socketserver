@@ -1,0 +1,284 @@
+<root>
+  <pysimCoder>
+    <pysimCoderVersion>0.9</pysimCoderVersion>
+  </pysimCoder>
+  <Date>
+    <SavingDate>04.04.2022 - 21:03:16</SavingDate>
+  </Date>
+  <Simulation>
+    <Template>rt.tmf</Template>
+    <Ts>0.127</Ts>
+    <AddObj></AddObj>
+    <ParScript></ParScript>
+    <Tf>10</Tf>
+    <Priority></Priority>
+  </Simulation>
+  <block>
+    <name>SocketServer</name>
+    <inp>5</inp>
+    <outp>0</outp>
+    <inset>1</inset>
+    <outset>0</outset>
+    <icon>TCPSOCKET</icon>
+    <params>TCPsocketTxBlk|IP Addr:'127.0.0.1'|Port:5000</params>
+    <help>This block implements a TCP sender
+
+Parameters
+IP address of the receiver
+Port
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>210.0</posX>
+    <posY>-270.0</posY>
+  </block>
+  <block>
+    <name>Execution Time</name>
+    <inp>0</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>TIMER</icon>
+    <params>getTimerBlk</params>
+    <help>This block put the execution time as output value.
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-240.0</posX>
+    <posY>-410.0</posY>
+  </block>
+  <block>
+    <name>Mode 20</name>
+    <inp>0</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>CONST</icon>
+    <params>constBlk|Value: 20</params>
+    <help>This block implements a constant input signal.
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-240.0</posX>
+    <posY>-310.0</posY>
+  </block>
+  <block>
+    <name>tos1a vent rpm</name>
+    <inp>3</inp>
+    <outp>15</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon></icon>
+    <params>tos1a|Port: '/dev/ttyACM0'|TimeConstLamp: 0.5|TimeConstVent: 0.5|TimeConstTemp: 0.5</params>
+    <help>Params = 4
+Port - 
+TimeConstLamp - 0.5s to 10.0s
+TimeConstVent - 0.5s to 10.0s
+TimeConstTemp - 0.5s to 10.0s
+
+---
+
+Inputs = 3
+0 = temp
+1 = vent
+2 = lamp
+
+---
+
+Outputs = 15
+0 = temp  - PCB
+1 = temp - internal, filtered
+2 = temp - internal, derived
+3 = temp - external, filtered
+4 = temp - external, derived
+
+5 = light intensity - linear, filtered
+6 = light intensity - linear, derived
+7 = light intensity - logarithmic, filtered
+8 = light intensity - logarithmic, derived
+9 = lamp - current
+10 = lamp - voltage
+
+11 = vent - current
+12 = vent - volatge
+13 = vent - rpm, filtered
+14 = vent - rpm, derived
+
+
+
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-80.0</posX>
+    <posY>110.0</posY>
+  </block>
+  <block>
+    <name>Desired Fan Rpm</name>
+    <inp>0</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>1</outset>
+    <icon>UNIXSOCK</icon>
+    <params>unixsocketSBlk|Socket: 'ssock'|Default outputs: [0.]</params>
+    <help>This block implements a Unix Socket Server, which can receive signals from a client and pass them as double values into the block diagram.
+
+Parameters:
+Socket: the socket name
+Default output: the output before arriving of data
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-650.0</posX>
+    <posY>130.0</posY>
+  </block>
+  <block>
+    <name>Discrete PID</name>
+    <inp>1</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>PID</icon>
+    <params>discretePIDBlk|Proportional gain: 10|Integral gain: 10|Derivative gain: 10|Min value: 0|Max value: 100</params>
+    <help>Discrete PID controller
+
+Parameters
+Proportional gain
+Integral gain
+Discrete gain
+Min value: minimal output value
+Max value: maximal output value
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-290.0</posX>
+    <posY>110.0</posY>
+  </block>
+  <block>
+    <name>Sub</name>
+    <inp>2</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>PM</icon>
+    <params>sumBlk|Gains: [-1,1]</params>
+    <help>This block get the weighted sum of the input signals.
+
+It can have more than 2 inputs.
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-440.0</posX>
+    <posY>110.0</posY>
+  </block>
+  <block>
+    <name>Set to 0</name>
+    <inp>0</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>CONST</icon>
+    <params>constBlk|Value: 0</params>
+    <help>This block implements a constant input signal.
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-260.0</posX>
+    <posY>270.0</posY>
+  </block>
+  <connection>
+    <pos1X>-610.0</pos1X>
+    <pos1Y>130.0</pos1Y>
+    <pos2X>170.0</pos2X>
+    <pos2Y>-190.0</pos2Y>
+    <pt>-600.0,130.0</pt>
+    <pt>-550.0,130.0</pt>
+    <pt>-550.0,200.0</pt>
+    <pt>40.0,200.0</pt>
+    <pt>40.0,-190.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-250.0</pos1X>
+    <pos1Y>110.0</pos1Y>
+    <pos2X>170.0</pos2X>
+    <pos2Y>-230.0</pos2Y>
+    <pt>-190.0,110.0</pt>
+    <pt>-190.0,-230.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-40.0</pos1X>
+    <pos1Y>350.0</pos1Y>
+    <pos2X>170.0</pos2X>
+    <pos2Y>-270.0</pos2Y>
+    <pt>100.0,350.0</pt>
+    <pt>100.0,-270.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-200.0</pos1X>
+    <pos1Y>-310.0</pos1Y>
+    <pos2X>170.0</pos2X>
+    <pos2Y>-310.0</pos2Y>
+    <pt>30.0,-310.0</pt>
+    <pt>30.0,-310.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-200.0</pos1X>
+    <pos1Y>-410.0</pos1Y>
+    <pos2X>170.0</pos2X>
+    <pos2Y>-350.0</pos2Y>
+    <pt>30.0,-410.0</pt>
+    <pt>30.0,-350.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-610.0</pos1X>
+    <pos1Y>130.0</pos1Y>
+    <pos2X>-480.0</pos2X>
+    <pos2Y>130.0</pos2Y>
+    <pt>-600.0,130.0</pt>
+    <pt>-600.0,130.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-400.0</pos1X>
+    <pos1Y>110.0</pos1Y>
+    <pos2X>-330.0</pos2X>
+    <pos2Y>110.0</pos2Y>
+    <pt>-360.0,110.0</pt>
+    <pt>-360.0,110.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-40.0</pos1X>
+    <pos1Y>350.0</pos1Y>
+    <pos2X>-480.0</pos2X>
+    <pos2Y>90.0</pos2Y>
+    <pt>100.0,350.0</pt>
+    <pt>100.0,0.0</pt>
+    <pt>-230.0,0.0</pt>
+    <pt>-580.0,0.0</pt>
+    <pt>-580.0,90.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-250.0</pos1X>
+    <pos1Y>110.0</pos1Y>
+    <pos2X>-120.0</pos2X>
+    <pos2Y>110.0</pos2Y>
+    <pt>-160.0,110.0</pt>
+    <pt>-160.0,110.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-220.0</pos1X>
+    <pos1Y>270.0</pos1Y>
+    <pos2X>-120.0</pos2X>
+    <pos2Y>70.0</pos2Y>
+    <pt>-150.0,270.0</pt>
+    <pt>-150.0,270.0</pt>
+    <pt>-150.0,70.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-220.0</pos1X>
+    <pos1Y>270.0</pos1Y>
+    <pos2X>-120.0</pos2X>
+    <pos2Y>150.0</pos2Y>
+    <pt>-150.0,270.0</pt>
+    <pt>-150.0,140.0</pt>
+    <pt>-150.0,150.0</pt>
+  </connection>
+</root>
