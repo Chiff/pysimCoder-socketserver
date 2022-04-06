@@ -3,11 +3,11 @@
     <pysimCoderVersion>0.9</pysimCoderVersion>
   </pysimCoder>
   <Date>
-    <SavingDate>04.04.2022 - 22:33:31</SavingDate>
+    <SavingDate>06.04.2022 - 21:02:59</SavingDate>
   </Date>
   <Simulation>
-    <Template>sim.tmf</Template>
-    <Ts>0.01</Ts>
+    <Template>rt.tmf</Template>
+    <Ts>0.05</Ts>
     <AddObj></AddObj>
     <ParScript></ParScript>
     <Tf>10</Tf>
@@ -20,7 +20,7 @@
     <inset>0</inset>
     <outset>0</outset>
     <icon>PID</icon>
-    <params>discretePIDBlk|Proportional gain: 1|Integral gain: 1|Derivative gain: 1|Min value: -3.3|Max value: 3.3</params>
+    <params>discretePIDBlk|Proportional gain: 1|Integral gain: 1|Derivative gain: 1|Min value: 0|Max value: 1</params>
     <help>Discrete PID controller
 
 Parameters
@@ -36,18 +36,18 @@ Max value: maximal output value
     <posY>-50.0</posY>
   </block>
   <block>
-    <name>Gain</name>
+    <name>convertToVolts_do5div1023</name>
     <inp>1</inp>
     <outp>1</outp>
     <inset>1</inset>
     <outset>1</outset>
     <icon>MULT</icon>
-    <params>matmultBlk|Gains: 1</params>
+    <params>matmultBlk|Gains: 0.0048875855327468</params>
     <help>Implements the multiplication of the input with a matrix of coefficients.
 </help>
     <width>80</width>
     <flip>0</flip>
-    <posX>-620.0</posX>
+    <posX>-580.0</posX>
     <posY>-150.0</posY>
   </block>
   <block>
@@ -57,7 +57,7 @@ Max value: maximal output value
     <inset>0</inset>
     <outset>0</outset>
     <icon>PM</icon>
-    <params>sumBlk|Gains: [1,-1]</params>
+    <params>sumBlk|Gains: [-1,1]</params>
     <help>This block get the weighted sum of the input signals.
 
 It can have more than 2 inputs.
@@ -74,7 +74,7 @@ It can have more than 2 inputs.
     <inset>0</inset>
     <outset>0</outset>
     <icon>INIT</icon>
-    <params>setup_af|Port:'/dev/ttyACM0'|Baud:57600</params>
+    <params>setup_af|Port: '/dev/ttyUSB0'|Baud: 57600</params>
     <help></help>
     <width>80</width>
     <flip>0</flip>
@@ -88,7 +88,7 @@ It can have more than 2 inputs.
     <inset>0</inset>
     <outset>0</outset>
     <icon>DI</icon>
-    <params>digitalWrite_af|Device pin:8</params>
+    <params>digitalWrite_af|Device pin: 8</params>
     <help></help>
     <width>80</width>
     <flip>0</flip>
@@ -127,7 +127,7 @@ It can have more than 2 inputs.
 </help>
     <width>80</width>
     <flip>0</flip>
-    <posX>-620.0</posX>
+    <posX>-580.0</posX>
     <posY>-340.0</posY>
   </block>
   <block>
@@ -142,7 +142,7 @@ It can have more than 2 inputs.
 </help>
     <width>80</width>
     <flip>0</flip>
-    <posX>-620.0</posX>
+    <posX>-580.0</posX>
     <posY>-250.0</posY>
   </block>
   <block>
@@ -194,7 +194,7 @@ Port
   <connection>
     <pos1X>-710.0</pos1X>
     <pos1Y>-150.0</pos1Y>
-    <pos2X>-660.0</pos2X>
+    <pos2X>-620.0</pos2X>
     <pos2Y>-150.0</pos2Y>
     <pt>-670.0,-150.0</pt>
     <pt>-670.0,-150.0</pt>
@@ -216,20 +216,20 @@ Port
     <pt>-10.0,-50.0</pt>
   </connection>
   <connection>
-    <pos1X>-580.0</pos1X>
+    <pos1X>-540.0</pos1X>
     <pos1Y>-340.0</pos1Y>
     <pos2X>-10.0</pos2X>
     <pos2Y>-340.0</pos2Y>
-    <pt>-410.0,-340.0</pt>
-    <pt>-410.0,-340.0</pt>
+    <pt>-370.0,-340.0</pt>
+    <pt>-370.0,-340.0</pt>
   </connection>
   <connection>
-    <pos1X>-580.0</pos1X>
+    <pos1X>-540.0</pos1X>
     <pos1Y>-250.0</pos1Y>
     <pos2X>-10.0</pos2X>
     <pos2Y>-300.0</pos2Y>
-    <pt>-500.0,-250.0</pt>
-    <pt>-500.0,-300.0</pt>
+    <pt>-460.0,-250.0</pt>
+    <pt>-460.0,-300.0</pt>
   </connection>
   <connection>
     <pos1X>-220.0</pos1X>
@@ -249,19 +249,19 @@ Port
     <pt>-350.0,-220.0</pt>
   </connection>
   <connection>
-    <pos1X>-580.0</pos1X>
+    <pos1X>-540.0</pos1X>
     <pos1Y>-150.0</pos1Y>
     <pos2X>-300.0</pos2X>
     <pos2Y>-70.0</pos2Y>
-    <pt>-440.0,-150.0</pt>
-    <pt>-440.0,-70.0</pt>
+    <pt>-400.0,-150.0</pt>
+    <pt>-400.0,-70.0</pt>
   </connection>
   <connection>
-    <pos1X>-580.0</pos1X>
+    <pos1X>-540.0</pos1X>
     <pos1Y>-150.0</pos1Y>
     <pos2X>-10.0</pos2X>
     <pos2Y>-260.0</pos2Y>
-    <pt>-440.0,-150.0</pt>
-    <pt>-440.0,-260.0</pt>
+    <pt>-400.0,-150.0</pt>
+    <pt>-400.0,-260.0</pt>
   </connection>
 </root>

@@ -41,7 +41,7 @@
 		getAxisName: () => ({
 			yLeft: 'Temperature (°C)',
 			yRight: 'Input temperature (%)',
-			x: 'time (s)'
+			x: 'execution time (s)'
 		})
 	};
 })();

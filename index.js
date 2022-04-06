@@ -9,7 +9,7 @@ const {EventData} = require('./src/model.js');
 
 
 const app = express();
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 app.get('/', function (req, res) {
 	ejs.renderFile('src/template/index.ejs', SHARED.templateData.recalc(),
 		{}, function (err, template) {
@@ -25,10 +25,30 @@ app.get('/client.js', function (req, res) {
 	res.sendFile('src/template/client.js', {root: __dirname});
 });
 
+app.use('/src', express.static('src/template/src'));
 app.use('/modes', express.static('src/template/modes'));
 
 app.get('/api/data', function (req, res) {
 	res.json(SHARED.templateData.recalc());
+});
+
+app.post('/api/merge', function (req, res) {
+	const data = req.body;
+	Object.assign(SHARED.templateData, data);
+
+	Object.assign(SHARED.templateData.data, data.data);
+	SHARED.templateData.activeClientId = null;
+	SHARED.templateData.clients = data.clients;
+
+	res.json(SHARED.templateData.recalc());
+});
+
+app.get('/api/download', function (req, res) {
+	const data = SHARED.templateData.recalc();
+	const fileName = `socket-server-backup_${+new Date()}.json`;
+	res.setHeader('Content-disposition', `attachment; filename=${fileName}`);
+	res.setHeader('Content-type', 'application/json');
+	res.send(JSON.stringify(data));
 });
 
 // [post] api/send with json as data

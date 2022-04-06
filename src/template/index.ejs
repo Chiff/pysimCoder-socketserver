@@ -2,43 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>TCP pysimcoder</title>
+    <title>pysimCoder-socketServer</title>
     <script
             src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
     <script src="https://cdn.plot.ly/plotly-2.9.0.min.js"></script>
-    <script src="client.js" type="module"></script>
+    <script src="src/client.js" type="module"></script>
+    <link rel="stylesheet" href="src/client.css">
 
-    <style>
-      summary {
-        font-size: 1.5em;
-        font-weight: bold;
-      }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,700;1,300;1,700&display=swap"
+          rel="stylesheet">
+
 </head>
 <body>
-<h1>TCP pysimcoder</h1>
 
-<h2>Status</h2>
-<ul>
-    <li>Active client: <b id="__holder__activeClient"></b></li>
-    <li>Client list: <b id="__holder__clientList"></b></li>
-</ul>
+<main>
+    <aside>
+        <header class="with-status">
+            <h1>Socket Server <br> <small>pysimCoder</small></h1>
+        </header>
+        <div id="__holder__clientList"></div>
+    </aside>
 
-<h2>Client detail: <b id="__holder__useClient"></b></h2>
-<div>
-    Data to send to client: <input id="__holder__dataToSend" type="text" value="" placeholder="[0.123, 255, ...]"/>
-    <button onclick="sendArray()">Send data</button>
-    <div><small>use array format, eg: [0.123, 255]</small></div>
-</div>
-<div id="__holder__plotData"></div>
+    <article>
+        <header>
+            <h1 id="__holder__useClient"></h1>
+        </header>
 
-<details>
-    <summary>Server data</summary>
-    <pre id="__holder__serverData"></pre>
-</details>
+        <div id="__holder__plotData"></div>
 
+        <div class="client-send-data">
+            <h4>Data to send to client:</h4>
+            <input
+                    id="__holder__dataToSend"
+                    type="text"
+                    value=""
+                    placeholder="[0.123, 255, ...]"
+            />
+            <div><small>use array format, eg: [0.123, 255]</small></div>
+
+            <button class="btn" style="margin: 1rem 0 0 0;" onclick="sendArray()">Send
+                data to device
+            </button>
+        </div>
+    </article>
+</main>
+
+<footer>
+    Sync:
+
+    <a href="api/download" target="_blank" class="btn">Download server data</a>
+
+    <input type="file" id="uploadinput" hidden/>
+    <label for="uploadinput" class="file-button">Upload and merge data</label>
+</footer>
 </body>
 </html>
 

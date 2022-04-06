@@ -16,32 +16,32 @@
 				x: allData.map(item => item.x),
 				y: allData.map(item => Math.max(item.yLeft1, 0)),
 				type: 'scatter',
-				name: 'capacitance (C)'
+				name: 'voltage (V)'
 			};
 
 			const desired = {
 				x: allData.map(item => item.x),
 				y: allData.map(item => item.yLeft2),
 				type: 'scatter',
-				name: 'desired capacitance (C)'
+				name: 'desired voltage (V)'
 			};
 
 			const outPercentage = {
 				x: allData.map(item => item.x),
-				y: allData.map(item => item.yRight2),
+				y: allData.map(item => Math.floor(item.yRight2)),
 				type: 'scatter',
-				name: 'input (0-255)',
+				name: 'input (0-1)',
 				yaxis: 'y2'
 			};
 
 
 			return [current, desired, outPercentage];
 		},
-		getRange: () => [[0, undefined], [0, undefined], [0, 255]],
+		getRange: () => [undefined, undefined, [-0.1, 1.1]],
 		getAxisName: () => ({
-			yLeft: 'capacitance (C)',
-			yRight: 'input (0-255)',
-			x: 'time (s)'
+			yLeft: 'voltage (V)',
+			yRight: 'input (0-1)',
+			x: 'execution time (s)'
 		})
 	};
 })();

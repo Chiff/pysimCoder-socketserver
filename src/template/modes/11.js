@@ -1,14 +1,14 @@
 (() => {
-	window.dataResolvers[21] = {
-		mode: 21,
-		plotName: 'TOS1A - light intensity',
+	window.dataResolvers[11] = {
+		mode: 11,
+		plotName: 'Arduino Uno (with Arduino Firmata) - HeatShield',
 		mappingFn: (data) => {
-			const [executionTime, mode, lightIntensity, lightOutPercent, desiredIntensity] = data;
+			const [executionTime, mode, temp, desiredTemp, outPerc] = data;
 			return {
 				x: executionTime,
-				yLeft1: lightIntensity,
-				yLeft2: desiredIntensity,
-				yRight2: lightOutPercent
+				yLeft1: temp,
+				yLeft2: desiredTemp,
+				yRight1: outPerc
 			};
 		},
 		getDataInConfig: (allData) => {
@@ -16,32 +16,33 @@
 				x: allData.map(item => item.x),
 				y: allData.map(item => Math.max(item.yLeft1, 0)),
 				type: 'scatter',
-				name: 'Light intensity'
+				name: 'temp (C)'
 			};
 
 			const desired = {
 				x: allData.map(item => item.x),
 				y: allData.map(item => item.yLeft2),
 				type: 'scatter',
-				name: 'Desired intensity'
+				name: 'desired temp (C)'
 			};
+
 
 			const outPercentage = {
 				x: allData.map(item => item.x),
-				y: allData.map(item => item.yRight2),
+				y: allData.map(item => Math.floor(item.yRight1 / 2.55)),
 				type: 'scatter',
-				name: 'input intensity (%)',
+				name: 'input 1 (0-100)',
 				yaxis: 'y2'
 			};
 
-
 			return [current, desired, outPercentage];
 		},
-		getRange: () => [[0, undefined], [0, undefined], [0, 100]],
+		getRange: () => [undefined, undefined, [-1, undefined]],
 		getAxisName: () => ({
-			yLeft: 'Light intensity',
-			yRight: 'Input intensity (%)',
+			yLeft: 'temperature (C)',
+			yRight: 'input (0-100)',
 			x: 'execution time (s)'
 		})
 	};
 })();
+

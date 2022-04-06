@@ -15,38 +15,45 @@ const init = () => {
  * @type {Object.<string, Resolver>}
  */
 const dataResolver = {
-	activeClient: {
-		selector: '#__holder__activeClient',
-		mappingFn: (dataResponse) => {
-			if (dataResponse.activeClientId && !shared.useClient) {
-				setActive(dataResponse.activeClientId);
-			}
-
-			if (shared.useClient === shared.templateData?.activeClientId && !dataResponse.activeClientId) {
-				setActive(null);
-			}
-
-			return dataResponse.activeClientId;
-		}
-	},
+	// activeClient: {
+	// 	selector: '#__holder__activeClient',
+	// 	mappingFn: (dataResponse) => {
+	// 		if (dataResponse.activeClientId && !shared.useClient) {
+	// 			setActive(dataResponse.activeClientId);
+	// 		}
+	//
+	// 		if (shared.useClient === shared.templateData?.activeClientId && !dataResponse.activeClientId) {
+	// 			setActive(null);
+	// 		}
+	//
+	// 		return dataResponse.activeClientId;
+	// 	}
+	// },
 	clientList: {
 		selector: '#__holder__clientList',
 		mappingFn: (dataResponse) => {
 			const d = dataResponse.clients || [];
-			return `<ul>${d.map((c) => `<li>${c} - <button onclick="setActive('${c}')">use</button></li>`).join('')}</ul>`;
 
+			if (d.length === 0) {
+				return `No client connected`;
+			}
+
+			return `${d.reverse().map((c) => {
+				const isActive = c === shared.useClient;
+				return `<div role="button" class="client-item ${isActive ? 'isActive' : ''}" onclick="setActive('${c}')">${c}</div>`;
+			}).join('')}`;
 		}
 	},
-	serverData: {
-		selector: '#__holder__serverData',
-		mappingFn: (dataResponse) => {
-			return JSON.stringify(dataResponse, null, '\t');
-		}
-	},
+	// serverData: {
+	// 	selector: '#__holder__serverData',
+	// 	mappingFn: (dataResponse) => {
+	// 		return JSON.stringify(dataResponse, null, '\t');
+	// 	}
+	// },
 	useClient: {
 		selector: '#__holder__useClient',
 		mappingFn: (dataResponse) => {
-			return `${shared.useClient}`;
+			return `${shared.useClient || 'No client selected'}`;
 		}
 	},
 	plotData: {
@@ -81,11 +88,7 @@ window.setActive = (client) => {
 	const data = resolver.mappingFn(shared.templateData);
 	$element.html(data);
 
-	// const resolver2 = dataResolver.plotData;
-	// const $element2 = $(resolver2.selector);
-	// const data2 = resolver2.mappingFn(shared.templateData);
-	// $element2.html(data2);
-
+	$('#__holder__plotData').html('');
 };
 
 window.sendArray = () => {
@@ -113,6 +116,35 @@ window.sendArray = () => {
 	});
 };
 
+window.handleFileSelect = () => {
+	if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+		alert('The File APIs are not fully supported in this browser.');
+		return;
+	}
+
+	const x = $('#uploadinput').prop('files');
+	console.log('handleFileSelect', x[0]);
+
+	var fr = new FileReader();
+	fr.onload = function () {
+		const json = fr.result;
+		$.ajax({
+			url: '/api/merge',
+			type: 'POST',
+			contentType: 'application/json',
+			data: json,
+			success: (d) => {
+			},
+			error: (e) => {
+				alert('handleFileSelect error', e);
+			}
+		});
+	};
+	fr.readAsText(x[0]);
+};
+
+
+$('#uploadinput').on('change', handleFileSelect);
 
 function refresh() {
 	// ajax get index html
@@ -133,8 +165,21 @@ function refresh() {
 
 			shared.templateData = response;
 
-			if (!shared.useClient) {
-				shared.useClient = response.activeClientId;
+			if (!shared.useClient || shared.useClient !== response.activeClientId && response.activeClientId) {
+				window.setActive(response.activeClientId);
+			}
+
+			if (response.activeClientId) {
+				document.querySelector('header').classList.add('isActive');
+
+				document.querySelector('header').classList.remove('isWaiting');
+				document.body.classList.remove('isWaiting');
+
+			} else {
+				document.querySelector('header').classList.add('isWaiting');
+				document.body.classList.add('isWaiting');
+
+				document.querySelector('header').classList.remove('isActive');
 			}
 
 
@@ -426,11 +471,12 @@ const plotlyDefault = (plotResolver, plotData, range = []) => {
 		layout: {
 			title: plotResolver.plotName,
 			xaxis: {
-				title: 'execution time'
+				title: 'execution time',
+				range: plotResolver.getRange()[0]
 			},
 			yaxis: {
 				title: 'temperature in C',
-				range: plotResolver.getRange()[0]
+				range: plotResolver.getRange()[1]
 			},
 			yaxis2: {
 				title: 'input in % (0-255)',
@@ -438,7 +484,7 @@ const plotlyDefault = (plotResolver, plotData, range = []) => {
 				tickfont: {color: 'rgb(148, 103, 189)'},
 				overlaying: 'y',
 				side: 'right',
-				range: plotResolver.getRange()[1]
+				range: plotResolver.getRange()[2]
 			}
 		}
 	};

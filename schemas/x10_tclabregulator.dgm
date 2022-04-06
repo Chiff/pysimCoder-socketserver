@@ -3,11 +3,11 @@
     <pysimCoderVersion>0.9</pysimCoderVersion>
   </pysimCoder>
   <Date>
-    <SavingDate>30.03.2022 - 23:36:59</SavingDate>
+    <SavingDate>06.04.2022 - 21:47:05</SavingDate>
   </Date>
   <Simulation>
-    <Template>sim.tmf</Template>
-    <Ts>0.01</Ts>
+    <Template>rt.tmf</Template>
+    <Ts>0.05</Ts>
     <AddObj></AddObj>
     <ParScript></ParScript>
     <Tf>10</Tf>
@@ -20,7 +20,7 @@
     <inset>0</inset>
     <outset>0</outset>
     <icon>PM</icon>
-    <params>sumBlk|Gains: [1,-1]</params>
+    <params>sumBlk|Gains: [-1,1]</params>
     <help>This block get the weighted sum of the input signals.
 
 It can have more than 2 inputs.
@@ -37,7 +37,7 @@ It can have more than 2 inputs.
     <inset>0</inset>
     <outset>0</outset>
     <icon></icon>
-    <params>analogWrite_af|Device pin:7|Pin mode:0</params>
+    <params>analogWrite_af|Device pin: 5|Pin mode: 3</params>
     <help>#define MODE_INPUT  0x00
 #define MODE_OUTPUT    0x01
 #define MODE_ANALOG    0x02
@@ -57,7 +57,7 @@ It can have more than 2 inputs.
     <inset>0</inset>
     <outset>0</outset>
     <icon></icon>
-    <params>analogWrite_af|Device pin:7|Pin mode:0</params>
+    <params>analogWrite_af|Device pin: 3|Pin mode: 3</params>
     <help>#define MODE_INPUT  0x00
 #define MODE_OUTPUT    0x01
 #define MODE_ANALOG    0x02
@@ -86,7 +86,7 @@ Default output: the output before arriving of data
 </help>
     <width>80</width>
     <flip>0</flip>
-    <posX>-700.0</posX>
+    <posX>-710.0</posX>
     <posY>100.0</posY>
   </block>
   <block>
@@ -180,7 +180,7 @@ Default output: the output before arriving of data
     <inset>0</inset>
     <outset>0</outset>
     <icon>PID</icon>
-    <params>discretePIDBlk|Proportional gain: 1|Integral gain: 1|Derivative gain: 1|Min value: -3.3|Max value: 3.3</params>
+    <params>discretePIDBlk|Proportional gain: 1|Integral gain: 1|Derivative gain: 1|Min value: 0|Max value: 255</params>
     <help>Discrete PID controller
 
 Parameters
@@ -202,7 +202,7 @@ Max value: maximal output value
     <inset>0</inset>
     <outset>0</outset>
     <icon>PID</icon>
-    <params>discretePIDBlk|Proportional gain: 1|Integral gain: 1|Derivative gain: 1|Min value: -3.3|Max value: 3.3</params>
+    <params>discretePIDBlk|Proportional gain: 1|Integral gain: 1|Derivative gain: 1|Min value: 0|Max value: 255</params>
     <help>Discrete PID controller
 
 Parameters
@@ -224,7 +224,7 @@ Max value: maximal output value
     <inset>0</inset>
     <outset>0</outset>
     <icon>PM</icon>
-    <params>sumBlk|Gains: [1,-1]</params>
+    <params>sumBlk|Gains: [-1,1]</params>
     <help>This block get the weighted sum of the input signals.
 
 It can have more than 2 inputs.
@@ -314,20 +314,20 @@ Port
     <pt>30.0,200.0</pt>
   </connection>
   <connection>
-    <pos1X>-660.0</pos1X>
+    <pos1X>-670.0</pos1X>
     <pos1Y>80.0</pos1Y>
     <pos2X>-220.0</pos2X>
     <pos2Y>80.0</pos2Y>
-    <pt>-460.0,80.0</pt>
-    <pt>-460.0,80.0</pt>
+    <pt>-470.0,80.0</pt>
+    <pt>-470.0,80.0</pt>
   </connection>
   <connection>
-    <pos1X>-660.0</pos1X>
+    <pos1X>-670.0</pos1X>
     <pos1Y>120.0</pos1Y>
     <pos2X>-220.0</pos2X>
     <pos2Y>220.0</pos2Y>
-    <pt>-620.0,120.0</pt>
-    <pt>-620.0,220.0</pt>
+    <pt>-630.0,120.0</pt>
+    <pt>-630.0,220.0</pt>
   </connection>
   <connection>
     <pos1X>-660.0</pos1X>
@@ -395,23 +395,23 @@ Port
     <pt>-320.0,-240.0</pt>
   </connection>
   <connection>
-    <pos1X>-660.0</pos1X>
+    <pos1X>-670.0</pos1X>
     <pos1Y>80.0</pos1Y>
     <pos2X>120.0</pos2X>
     <pos2Y>-200.0</pos2Y>
-    <pt>-460.0,80.0</pt>
-    <pt>-290.0,80.0</pt>
-    <pt>-290.0,-200.0</pt>
+    <pt>-470.0,80.0</pt>
+    <pt>-300.0,80.0</pt>
+    <pt>-300.0,-200.0</pt>
   </connection>
   <connection>
-    <pos1X>-660.0</pos1X>
+    <pos1X>-670.0</pos1X>
     <pos1Y>120.0</pos1Y>
     <pos2X>120.0</pos2X>
     <pos2Y>-160.0</pos2Y>
-    <pt>-620.0,120.0</pt>
-    <pt>-620.0,220.0</pt>
-    <pt>-240.0,220.0</pt>
-    <pt>-240.0,-160.0</pt>
+    <pt>-630.0,120.0</pt>
+    <pt>-630.0,220.0</pt>
+    <pt>-250.0,220.0</pt>
+    <pt>-250.0,-160.0</pt>
   </connection>
   <connection>
     <pos1X>0.0</pos1X>

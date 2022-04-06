@@ -41,7 +41,7 @@
 		getAxisName: () => ({
 			yLeft: 'vent rpm (rpm)',
 			yRight: 'vent out (%)',
-			x: 'time (s)'
+			x: 'execution time (s)'
 		})
 	};
 })();
