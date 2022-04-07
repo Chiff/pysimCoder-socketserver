@@ -94,7 +94,6 @@ window.sendArray = () => {
 		contentType: 'application/json',
 		data: JSON.stringify(data),
 		success: (d) => {
-			alert('sendArray success', d);
 		},
 		error: (e) => {
 			alert('sendArray error', e);
