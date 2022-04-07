@@ -15,20 +15,6 @@ const init = () => {
  * @type {Object.<string, Resolver>}
  */
 const dataResolver = {
-	// activeClient: {
-	// 	selector: '#__holder__activeClient',
-	// 	mappingFn: (dataResponse) => {
-	// 		if (dataResponse.activeClientId && !shared.useClient) {
-	// 			setActive(dataResponse.activeClientId);
-	// 		}
-	//
-	// 		if (shared.useClient === shared.templateData?.activeClientId && !dataResponse.activeClientId) {
-	// 			setActive(null);
-	// 		}
-	//
-	// 		return dataResponse.activeClientId;
-	// 	}
-	// },
 	clientList: {
 		selector: '#__holder__clientList',
 		mappingFn: (dataResponse) => {
@@ -44,12 +30,6 @@ const dataResolver = {
 			}).join('')}`;
 		}
 	},
-	// serverData: {
-	// 	selector: '#__holder__serverData',
-	// 	mappingFn: (dataResponse) => {
-	// 		return JSON.stringify(dataResponse, null, '\t');
-	// 	}
-	// },
 	useClient: {
 		selector: '#__holder__useClient',
 		mappingFn: (dataResponse) => {
@@ -58,9 +38,12 @@ const dataResolver = {
 	},
 	plotData: {
 		selector: '#__holder__plotData',
-		mappingFn: (dataResponse) => {
-			if (!shared.useClient) return '';
-			if (!dataResponse.data || !dataResponse.data[shared.useClient]?.dataIn) return '';
+		mappingFn: (dataResponse, force) => {
+			if (!force) {
+				if (!shared.useClient) return '';
+				if (!dataResponse.data || !dataResponse.data[shared.useClient]?.dataIn) return '';
+				if (shared.useClient !== dataResponse.activeClientId || !dataResponse.activeClientId) return '';
+			}
 
 			const data = dataResponse.data[shared.useClient].dataIn || [];
 			if (!data[0] || !data[0].length) return '';
@@ -89,6 +72,9 @@ window.setActive = (client) => {
 	$element.html(data);
 
 	$('#__holder__plotData').html('');
+	if (shared.useClient) {
+		dataResolver.plotData.mappingFn(shared.templateData, true);
+	}
 };
 
 window.sendArray = () => {
@@ -154,15 +140,6 @@ function refresh() {
 		 * @param {TemplateData} response
 		 */
 		success: function (response) {
-			Object.values(dataResolver).forEach((resolver) => {
-				const $element = $(resolver.selector);
-				const data = resolver.mappingFn(response);
-
-				if (data) {
-					$element.html(data);
-				}
-			});
-
 			shared.templateData = response;
 
 			if (!shared.useClient || shared.useClient !== response.activeClientId && response.activeClientId) {
@@ -182,6 +159,14 @@ function refresh() {
 				document.querySelector('header').classList.remove('isActive');
 			}
 
+			Object.values(dataResolver).forEach((resolver) => {
+				const $element = $(resolver.selector);
+				const data = resolver.mappingFn(response);
+
+				if (data) {
+					$element.html(data);
+				}
+			});
 
 			setTimeout(function () {
 				refresh();
