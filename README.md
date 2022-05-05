@@ -12,13 +12,18 @@ Creates:
 Prerequisites:
 
 - Node.js (see package.json for version requirements)
-- npm or yarn (see package.json for version requirements)
+- yarn (see package.json for version requirements)
+- For easier installation proccess it is recommended to use [Volta](https://volta.sh/) (https://volta.sh/)
 
 Usage:
 
 - Navigate to pysimCoder/CodeGen/arduinoFirmata/tools/SocketServer
 - If necessary edit the `src/config.js` file
-- Run `npm run start` or `yarn start`
+- Run `yarn start`
+
+Note:
+
+- it is possible to use `npm` instead of `yarn`
 
 Modes and schemas:
 
