@@ -4,7 +4,7 @@ Express server that can be used to communicate with pysimCoder over TCP
 
 Creates:
 
-- simple web page to plot data from the Arduino and send commands to the Arduino
+- simple web page to plot data from the TCP client and send commands to Unix domain socket
 - express API
 - TCP server that listens on port 5000
 - Unix socket client
