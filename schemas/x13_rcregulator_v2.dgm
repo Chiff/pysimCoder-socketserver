@@ -1,0 +1,251 @@
+<root>
+  <pysimCoder>
+    <pysimCoderVersion>0.9</pysimCoderVersion>
+  </pysimCoder>
+  <Date>
+    <SavingDate>07.05.2022 - 20:35:33</SavingDate>
+  </Date>
+  <Simulation>
+    <Template>rt.tmf</Template>
+    <Ts>0.05</Ts>
+    <AddObj></AddObj>
+    <ParScript></ParScript>
+    <Tf>10</Tf>
+    <Priority></Priority>
+  </Simulation>
+  <block>
+    <name>Discrete PID</name>
+    <inp>1</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>PID</icon>
+    <params>discretePIDBlk|Proportional gain: 1|Integral gain: 1|Derivative gain: 1|Min value: 0|Max value: 1</params>
+    <help>Discrete PID controller
+
+Parameters
+Proportional gain
+Integral gain
+Discrete gain
+Min value: minimal output value
+Max value: maximal output value
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-140.0</posX>
+    <posY>-50.0</posY>
+  </block>
+  <block>
+    <name>convertToVolts_do5div1023</name>
+    <inp>1</inp>
+    <outp>1</outp>
+    <inset>1</inset>
+    <outset>1</outset>
+    <icon>MULT</icon>
+    <params>matmultBlk|Gains: 0.0048875855327468</params>
+    <help>Implements the multiplication of the input with a matrix of coefficients.
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-550.0</posX>
+    <posY>-70.0</posY>
+  </block>
+  <block>
+    <name>Sub</name>
+    <inp>2</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>PM</icon>
+    <params>sumBlk|Gains: [-1,1]</params>
+    <help>This block get the weighted sum of the input signals.
+
+It can have more than 2 inputs.
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-260.0</posX>
+    <posY>-50.0</posY>
+  </block>
+  <block>
+    <name>Setup Arduino Nano</name>
+    <inp>0</inp>
+    <outp>0</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>INIT</icon>
+    <params>setup_af|Port: '/dev/ttyUSB0'|Baud: 57600</params>
+    <help></help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-740.0</posX>
+    <posY>-340.0</posY>
+  </block>
+  <block>
+    <name>Digital Write 8</name>
+    <inp>1</inp>
+    <outp>0</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>DI</icon>
+    <params>digitalWrite_af|Device pin: 8</params>
+    <help></help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>40.0</posX>
+    <posY>-50.0</posY>
+  </block>
+  <block>
+    <name>Pin Read 18 Mode 2</name>
+    <inp>0</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon></icon>
+    <params>pinRead_af|Device pin: 18|Pin mode: 2</params>
+    <help>#define MODE_INPUT  0x00
+#define MODE_OUTPUT    0x01
+#define MODE_ANALOG    0x02
+#define MODE_PWM   0x03
+#define MODE_SERVO 0x04
+#define MODE_SHIFT 0x05
+#define MODE_I2C   0x06</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-730.0</posX>
+    <posY>-70.0</posY>
+  </block>
+  <block>
+    <name>Execution Time</name>
+    <inp>0</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>TIMER</icon>
+    <params>getTimerBlk</params>
+    <help>This block put the execution time as output value.
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-580.0</posX>
+    <posY>-330.0</posY>
+  </block>
+  <block>
+    <name>Mode 13</name>
+    <inp>0</inp>
+    <outp>1</outp>
+    <inset>0</inset>
+    <outset>0</outset>
+    <icon>CONST</icon>
+    <params>constBlk|Value: 13</params>
+    <help>This block implements a constant input signal.
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>-580.0</posX>
+    <posY>-220.0</posY>
+  </block>
+  <block>
+    <name>SocketServer</name>
+    <inp>5</inp>
+    <outp>1</outp>
+    <inset>1</inset>
+    <outset>1</outset>
+    <icon>TCPSOCKET</icon>
+    <params>TCPsocketTxRxBlk|IP Addr:'127.0.0.1'|Port:5000</params>
+    <help>This block implements a TCP sender
+
+Parameters
+IP address of the receiver
+Port
+</help>
+    <width>80</width>
+    <flip>0</flip>
+    <posX>50.0</posX>
+    <posY>-250.0</posY>
+  </block>
+  <connection>
+    <pos1X>90.0</pos1X>
+    <pos1Y>-250.0</pos1Y>
+    <pos2X>10.0</pos2X>
+    <pos2Y>-210.0</pos2Y>
+    <pt>130.0,-250.0</pt>
+    <pt>130.0,40.0</pt>
+    <pt>-340.0,40.0</pt>
+    <pt>-340.0,-210.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-540.0</pos1X>
+    <pos1Y>-330.0</pos1Y>
+    <pos2X>10.0</pos2X>
+    <pos2Y>-330.0</pos2Y>
+    <pt>-260.0,-330.0</pt>
+    <pt>-260.0,-330.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-540.0</pos1X>
+    <pos1Y>-220.0</pos1Y>
+    <pos2X>10.0</pos2X>
+    <pos2Y>-290.0</pos2Y>
+    <pt>-410.0,-220.0</pt>
+    <pt>-410.0,-290.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-510.0</pos1X>
+    <pos1Y>-70.0</pos1Y>
+    <pos2X>10.0</pos2X>
+    <pos2Y>-250.0</pos2Y>
+    <pt>-380.0,-70.0</pt>
+    <pt>-380.0,-250.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-100.0</pos1X>
+    <pos1Y>-50.0</pos1Y>
+    <pos2X>10.0</pos2X>
+    <pos2Y>-170.0</pos2Y>
+    <pt>-50.0,-50.0</pt>
+    <pt>-50.0,-170.0</pt>
+  </connection>
+  <connection>
+    <pos1X>90.0</pos1X>
+    <pos1Y>-250.0</pos1Y>
+    <pos2X>-300.0</pos2X>
+    <pos2Y>-30.0</pos2Y>
+    <pt>130.0,-250.0</pt>
+    <pt>130.0,40.0</pt>
+    <pt>-340.0,40.0</pt>
+    <pt>-340.0,-30.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-690.0</pos1X>
+    <pos1Y>-70.0</pos1Y>
+    <pos2X>-590.0</pos2X>
+    <pos2Y>-70.0</pos2Y>
+    <pt>-650.0,-70.0</pt>
+    <pt>-650.0,-70.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-100.0</pos1X>
+    <pos1Y>-50.0</pos1Y>
+    <pos2X>0.0</pos2X>
+    <pos2Y>-50.0</pos2Y>
+    <pt>-10.0,-50.0</pt>
+    <pt>-10.0,-50.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-220.0</pos1X>
+    <pos1Y>-50.0</pos1Y>
+    <pos2X>-180.0</pos2X>
+    <pos2Y>-50.0</pos2Y>
+    <pt>-210.0,-50.0</pt>
+    <pt>-210.0,-50.0</pt>
+  </connection>
+  <connection>
+    <pos1X>-510.0</pos1X>
+    <pos1Y>-70.0</pos1Y>
+    <pos2X>-300.0</pos2X>
+    <pos2Y>-70.0</pos2Y>
+    <pt>-370.0,-70.0</pt>
+    <pt>-370.0,-70.0</pt>
+  </connection>
+</root>
