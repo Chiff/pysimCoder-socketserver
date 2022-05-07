@@ -5,52 +5,52 @@
  * @property {number[]} data - data[0] = exectution time,data[1] = mode (0: heatshield, 1: tclab), data[2..] = mode dependent
  */
 class EventData {
-  type;
-  clientId;
-  port;
-  data = [];
+	type;
+	clientId;
+	port;
+	data = [];
 
-  /**
-   * @param {('onDataIn'|'onDataOut'|'onClientConnect'|'onClientLeave')} type
-   * @param {string} clientId
-   * @param {number} port
-   * @param {number[]} data - data[0] = exectution time,data[1] = mode (0: heatshield, 1: tclab), data[2..] = mode dependent
-   */
-  constructor(type, clientId, port, data = []) {
-    this.type = type;
-    this.clientId = clientId;
-    this.port = port;
-    this.data = data;
-  }
+	/**
+	 * @param {('onDataIn'|'onDataOut'|'onClientConnect'|'onClientLeave')} type
+	 * @param {string} clientId
+	 * @param {number} port
+	 * @param {number[]} data - data[0] = exectution time,data[1] = mode (0: heatshield, 1: tclab), data[2..] = mode dependent
+	 */
+	constructor(type, clientId, port, data = []) {
+		this.type = type;
+		this.clientId = clientId;
+		this.port = port;
+		this.data = data;
+	}
 }
 
 
 class EventBus {
-  events = {
-    onDataIn: [],
-    onDataOut: [],
-    onClientConnect: [],
-    onClientLeave: [],
-  };
+	events = {
+		onDataIn: [],
+		onDataOut: [],
+		onClientConnect: [],
+		onClientLeave: []
+	};
 
-  /**
-   * @param {('onDataIn'|'onDataOut'|'onClientConnect'|'onClientLeave')} eventName
-   * @param {(data: EventData) => void} callback
-   */
-  subscribe(eventName, callback) {
-    if (!this.events[eventName]) {
-      this.events[eventName] = [];
-    }
-    this.events[eventName].push(callback);
-  }
+	/**
+	 * @param {('onDataIn'|'onDataOut'|'onClientConnect'|'onClientLeave')} eventName
+	 * @param {(data: EventData, clientSocket: null|module:net.Socket) => void} callback
+	 */
+	subscribe(eventName, callback) {
+		if (!this.events[eventName]) {
+			this.events[eventName] = [];
+		}
+		this.events[eventName].push(callback);
+	}
 
-  emit(eventName, data) {
-    if (this.events[eventName]) {
-      this.events[eventName].forEach(function (callback) {
-        callback(data);
-      });
-    }
-  }
+	emit(eventName, data, clientSocket = null) {
+		if (this.events[eventName]) {
+			this.events[eventName].forEach(function (callback) {
+				callback(data, clientSocket);
+			});
+		}
+	}
 }
 
 
@@ -69,21 +69,21 @@ class EventBus {
  * @property {string[]} clients
  */
 class TemplateData {
-  data = {};
-  activeClientId = null;
-  clients = [];
+	data = {};
+	activeClientId = null;
+	clients = [];
 
-  recalc = () => ({
-    data: this.data,
-    activeClientId: this.activeClientId,
-    clients: this.getClients(),
-  });
+	recalc = () => ({
+		data: this.data,
+		activeClientId: this.activeClientId,
+		clients: this.getClients()
+	});
 
-  getClients = () => Object.keys(this.data || {});
+	getClients = () => Object.keys(this.data || {});
 }
 
 module.exports = {
-  EventData,
-  EventBus,
-  TemplateData,
+	EventData,
+	EventBus,
+	TemplateData
 };

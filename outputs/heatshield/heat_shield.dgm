@@ -33,9 +33,9 @@
     <inp>4</inp>
     <outp>0</outp>
     <inset>1</inset>
-    <outset>0</outset>
+    <outset>1</outset>
     <icon>TCPSOCKET</icon>
-    <params>TCPsocketTxBlk|IP Addr: '127.0.0.1'|Port: 5000</params>
+    <params>TCPsocketTxRxBlk|IP Addr: '127.0.0.1'|Port: 5000</params>
     <help>This block implements a TCP sender
 
 Parameters

@@ -4,7 +4,7 @@ const ejs = require('ejs');
 const SHARED = require('./src/shared.js');
 const CONFIG = require('./src/config.js');
 const tcp = require('./src/tcp.js');
-const unixClient = require('./src/unix-clinet.js');
+const tcpClientHandler = require('./src/tcp-client-handler.js');
 const {EventData} = require('./src/model.js');
 
 
@@ -81,8 +81,11 @@ app.listen(CONFIG.port.http, function (error) {
 	// eventually we can create TCP sockets on demand :)
 	const s1 = tcp(CONFIG.port.tcp);
 
-	SHARED.bus.subscribe('onClientConnect', function (data) {
-		const c1 = unixClient(CONFIG.port.sock, function (data) {
+	SHARED.bus.subscribe('onClientConnect', function (data, clientSocket) {
+
+		tcpClientHandler(clientSocket, function (data) {
+			console.log('[tcp] onDataIn', JSON.stringify(data));
+
 			const dataLength = 8;
 			const totalLength = data.data.length;
 			const buffer = Buffer.alloc(dataLength * totalLength);
@@ -94,10 +97,12 @@ app.listen(CONFIG.port.http, function (error) {
 			return buffer;
 		});
 
+		SHARED.bus.emit('onDataOut', new EventData('onDataOut', data.clientId, CONFIG.port.tcp, [10]));
+
 
 		SHARED.templateData.activeClientId = data.clientId;
 		SHARED.templateData.data[data.clientId] = {
-			client: c1,
+			client: clientSocket,
 			dataIn: [],
 			dataOut: [],
 			eventLog: [{
